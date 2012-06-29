@@ -29,5 +29,15 @@ def init_db():
         db.commit()
 
 
+@app.before_request
+def before_request():
+    g.db = connect_db
+
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
+
+
 if __name__ == '__main__':
     app.run()
